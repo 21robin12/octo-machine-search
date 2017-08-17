@@ -33,17 +33,17 @@ namespace OctoMachineSearch
             }
             else
             {
-                PrintResults(matching.ToList());
+                PrintResults(matching.ToList(), searchText);
             }            
         }
 
-        static void PrintResults(IList<Machine> results)
+        static void PrintResults(IList<Machine> results, string searchText)
         {
             Console.WriteLine();
             var longestName = results.OrderByDescending(x => x.Name.Length).FirstOrDefault().Name.Length;
             foreach(var result in results)
             {
-                Console.WriteLine($"{result.Name.PadRight(longestName + 5)}{string.Join(" | ", result.Roles)}");
+                Console.WriteLine($"{result.Name.PadRight(longestName + 5)}{string.Join(" | ", result.Roles.Where(r => r.ToLower().Contains(searchText)))}");
             }
         }
     }
